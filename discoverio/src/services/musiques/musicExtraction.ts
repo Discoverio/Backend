@@ -9,7 +9,7 @@
 
 const DeezerPublicApi = require('deezer-public-api');
 let deezer = new DeezerPublicApi();
-let MongoClient = require('mongodb').MongoClient;
+let MongoClientExtract = require('mongodb').MongoClient;
 
 
 
@@ -30,7 +30,7 @@ function getRandomInt(min, max) {
  * @returns Un nombre aléatoire entre 044456 et 999999.
  */
 function generateAlbumIDForDeezerAPI() {
-    const randomID = getRandomInt(044456, 999999);
+    const randomID = getRandomInt('0o44456', 999999);
     return randomID;
 }
 
@@ -59,7 +59,7 @@ let UniqueIdList = ids.filter(function (item, pos, self) {
  * @param album
  */
 async function insertAlbum(album) {
-    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
+    const client = await MongoClientExtract.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
     const db = client.db('albums');
     const collection = db.collection('albums');
 

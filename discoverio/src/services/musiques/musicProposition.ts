@@ -7,7 +7,7 @@
  * Date de création: 31 janvier 2023
  */
 
-let MongoClient = require('mongodb').MongoClient;
+let MongoClientProposition = require('mongodb').MongoClient;
 
 
 /**
@@ -15,7 +15,7 @@ let MongoClient = require('mongodb').MongoClient;
  * Cette base contient des enregistrements musicaux ayant Deezer pour source.
  */
 async function getOneRandomAlbum() {
-    const client = await MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
+    const client = await MongoClientProposition.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
     const db = client.db('albums');
     const albumIds = await db.collection("albums").distinct("resultat.id");
     const un_album = albumIds[Math.floor(Math.random() * albumIds.length)];

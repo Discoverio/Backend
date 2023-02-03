@@ -43,7 +43,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 var DeezerPublicApi = require('deezer-public-api');
 var deezer = new DeezerPublicApi();
-var MongoClient = require('mongodb').MongoClient;
+var MongoClientExtract = require('mongodb').MongoClient;
 /**
 * Renvoie un nombre entier aléatoire entre les valeurs min et max.
  * @param min - Le nombre minimum que vous voulez générer.
@@ -60,7 +60,7 @@ function getRandomInt(min, max) {
  * @returns Un nombre aléatoire entre 044456 et 999999.
  */
 function generateAlbumIDForDeezerAPI() {
-    var randomID = getRandomInt(044456, 999999);
+    var randomID = getRandomInt('0o44456', 999999);
     return randomID;
 }
 /*
@@ -87,7 +87,7 @@ function insertAlbum(album) {
         var client, db, collection;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })];
+                case 0: return [4 /*yield*/, MongoClientExtract.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })];
                 case 1:
                     client = _a.sent();
                     db = client.db('albums');
@@ -102,7 +102,7 @@ function insertAlbum(album) {
     });
 }
 // Envoyer plusieurs requête avec des ID aléatoires.
-var promises = UniqueIdList.map(function (id) { return deezer.artist.albums("".concat(id)).then(function (responses) {
+var promises = UniqueIdList.map(function (id) { return deezer.artist.albums("" + id).then(function (responses) {
     // On vérifie qu'un album possède bien au moins un titre. Sinon, il est inexistant ou vide.
     if ((responses.total !== 0)) {
         var resultat = "";

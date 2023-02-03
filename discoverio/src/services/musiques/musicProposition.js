@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var MongoClient = require('mongodb').MongoClient;
+var MongoClientProposition = require('mongodb').MongoClient;
 /**
  * Fonction sans paramètre retournant un enregistrement musical provenant de la base de données de Discoverio
  * Cette base contient des enregistrements musicaux ayant Deezer pour source.
@@ -52,7 +52,7 @@ function getOneRandomAlbum() {
         var client, db, albumIds, un_album, album, alb_json, i;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, MongoClient.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })];
+                case 0: return [4 /*yield*/, MongoClientProposition.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })];
                 case 1:
                     client = _a.sent();
                     db = client.db('albums');
@@ -95,7 +95,7 @@ function checkAndExecute() {
         var hours = Math.floor(remainingTime / 1000 / 60 / 60) % 24;
         var minutes = Math.floor(remainingTime / 1000 / 60) % 60;
         var seconds = Math.floor(remainingTime / 1000) % 60;
-        console.log("La requ\u00EAte a \u00E9t\u00E9 ex\u00E9cut\u00E9e r\u00E9cemment, veuillez patienter ".concat(days, " jours, ").concat(hours, " heures, ").concat(minutes, " minutes et ").concat(seconds, " secondes."));
+        console.log("La requ\u00EAte a \u00E9t\u00E9 ex\u00E9cut\u00E9e r\u00E9cemment, veuillez patienter " + days + " jours, " + hours + " heures, " + minutes + " minutes et " + seconds + " secondes.");
         return;
     }
     lastExecutionTime = currentTime;
