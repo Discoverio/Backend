@@ -1,0 +1,9 @@
+# mongo-express.yml
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+    - 3006:3006
+    environment:
+    - API_URL=http://localhost:3006
