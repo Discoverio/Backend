@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { KeycloakConnectModule } from 'nest-keycloak-connect';
 
 @Module({
-  imports: [AuthModule, UsersModule],
+  imports: [
+    KeycloakConnectModule.register({
+      authServerUrl: 'http://localhost:8080/auth',
+      realm: 'music',
+      clientId: 'myclient',
+      secret: 'MfPjzOFZt9grQbyk1LKnAsagPJgnvw9t',
+    })
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
