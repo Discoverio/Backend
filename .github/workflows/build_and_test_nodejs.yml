@@ -1,0 +1,30 @@
+name: Build and test
+
+on:
+  pull_request:
+    branches: [ "develop" ]
+    types: [opened, reopened]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+    - name: Récupération du code
+      uses: actions/checkout@v3
+    - name: Build et test sur Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Installation des dépendants
+      run: npm ci
+    - name: Build
+      run: npm run build --if-present
+    - name: Tests unitaires
+      run: npm test
