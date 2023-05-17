@@ -44,16 +44,18 @@ export async function getAlbumYear(deezer_album_id) {
  * @returns Le genre de l'album.
  */
 export async function getAlbumGenre(deezer_album_id) {
+
   try {
-    const albumResponse = await axios.get(`https://api.deezer.com/album/${deezer_album_id}`);
-    const genreResponse = await axios.get(`https://api.deezer.com/genre/${albumResponse.data.genre_id}`);
-    const albumGenre = genreResponse.data.name;
-    console.log(`Le genre musical de l'album est ${albumGenre}`);
-    return albumGenre;
+
+    const response = await axios.get(`http://localhost:3000/infos/album/genre/${deezer_album_id}`);
+    return response.data;
+
   } catch (error) {
+
     console.error(error);
-    throw error;
-  }
+    return '';
+
+  }  
 }
 
 

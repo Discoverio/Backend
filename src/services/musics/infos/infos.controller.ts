@@ -20,6 +20,11 @@ export class InfosController {
       return this.infosService.isExplicit_lyrics(deezer_album_id);
   }
 
+  @Get('/infos/album/genre/:deezer_album_id')
+  async getAlbumGenre(@Param('deezer_album_id') deezer_album_id: string) {
+      return this.infosService.getAlbumGenre(deezer_album_id);
+  }
+
 }
 
 

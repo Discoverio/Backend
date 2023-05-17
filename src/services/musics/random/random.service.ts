@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoClient } from 'mongodb';
+import { fetchMultiplesId } from '../extraction/extraction';
 
 @Injectable()
 export class RandomService {
@@ -14,8 +15,9 @@ export class RandomService {
     let alb_json = album.resultat;
     for (let i in alb_json) {
       if (alb_json[i].id === un_album) {
-        console.log(alb_json[i].id + " true because find " + un_album);
-        console.log(alb_json[i]);
+        // console.log(alb_json[i].id + " true because find " + un_album);
+        // console.log(alb_json[i]);
+        fetchMultiplesId();
         return alb_json[i];
       }
     }
