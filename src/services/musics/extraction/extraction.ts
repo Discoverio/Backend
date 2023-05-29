@@ -7,15 +7,15 @@
  * Date de modification: 03 mars 2023
  */
 
-import { log } from "console";
+import { Console, log } from "console";
 
-
+// import { Inject } from '@nestjs/common';
+import { DatabaseService } from "src/database/database.service";
 
 const DeezerPublicApi = require('deezer-public-api');
 let deezer = new DeezerPublicApi();
-let MongoClientExtract = require('mongodb').MongoClient;
 
-
+const databaseService = new DatabaseService();
 
 /**
 * Renvoie un nombre entier aléatoire entre les valeurs min et max.
@@ -70,22 +70,27 @@ let UniqueIdList = ids.filter(function (item, pos, self) {
  * @param album
  */
 async function insertAlbum(album) {
-    const client = await MongoClientExtract.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
-    const db = client.db('albums');
+  try {
+    await databaseService.connect(); // Connectez-vous à la base de données en utilisant le service DatabaseService
+
+    const client = databaseService.getClient(); // Obtenez le client MongoDB à partir du service
+    const db = client.db('Discoverio');
     const collection = db.collection('albums');
 
     const existingAlbum = await collection.findOne({ id: album });
 
     if (existingAlbum) {
-        console.log(`L'album avec l'ID ${album} existe déjà dans la collection.`);
-        client.close();
-        return;
+      console.log(`L'album avec l'ID ${album} existe déjà dans la collection.`);
+      return;
     }
-
-    // getArtistByAlbumId(album);
     await collection.insertOne({ id: album });
-    client.close();
+  } catch (err) {
+    console.error('Erreur de connexion à la base de données:', err);
+  } finally {
+    // databaseService.disconnect(); // Fermez la connexion à la base de données
+  }
 }
+
 
 
 /**
@@ -94,26 +99,27 @@ async function insertAlbum(album) {
  * @param artist
  */
 async function insertArtist(artist) {
-  if (!artist.id) {
-      console.log("L'identifiant de l'artiste est undefined. Aucune opération d'insertion ne sera effectuée.");
-      return;
-  }
+  try {
+    await databaseService.connect(); // Connectez-vous à la base de données en utilisant le service DatabaseService
 
-  const client = await MongoClientExtract.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
-  const db = client.db('albums');
-  const collection = db.collection('artists');
+    const client = databaseService.getClient(); // Obtenez le client MongoDB à partir du service
+    const db = client.db('Discoverio');
+    const collection = db.collection('artists');
 
-  const existingArtist = await collection.findOne({ id: artist.id });
+    const existingArtist = await collection.findOne({ id: artist.id });
 
-  if (existingArtist) {
+    if (existingArtist) {
       console.log(`L'artiste avec l'ID ${artist.id} existe déjà dans la collection.`);
-      client.close();
       return;
-  }
+    }
 
-  await collection.insertOne(artist);
-  console.log(`L'artiste avec l'ID ${artist.id} a été inséré dans la collection.`);
-  client.close();
+    await collection.insertOne(artist);
+    console.log(`L'artiste avec l'ID ${artist.id} a été inséré dans la collection.`);
+  } catch (err) {
+    console.error('Erreur de connexion à la base de données:', err);
+  } finally {
+    // databaseService.disconnect(); // Fermez la connexion à la base de données
+  }
 }
 
 
@@ -141,7 +147,7 @@ export async function fetchMultiplesId() {
                       let album_id = element['id'];
                       const test = deezer.artist(album_id);
                       let promises2 = test.then(async respo2 => {
-                        console.log(respo2);
+                        // console.log(respo2);
                         insertArtist(respo2)
                       });
                     
@@ -204,22 +210,25 @@ export async function getGenres() {
 
 // Fonction pour insérer les genres dans la collection "genres" de la base de données "albums"
 async function insertGenres(genres) {
-    /* Creating a new MongoClient object. */
-    const client2 = new MongoClientExtract('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
-    try {
-      await client2.connect();
-      const collection = client2.db("albums").collection("genres");
-      const insertPromises = genres.map(genre => {
-          return collection.insertOne(genre);
-      });
-      const results = await Promise.all(insertPromises);
-      console.log(`${results.length} genres ont été insérés dans la collection.`);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      await client2.close();
-    }
+  try {
+    await databaseService.connect();
+
+    const client = databaseService.getClient();
+    const collection = client.db('Discoverio').collection('genres');
+
+    const insertPromises = genres.map(genre => {
+      return collection.insertOne(genre);
+    });
+
+    const results = await Promise.all(insertPromises);
+    console.log(`${results.length} genres ont été insérés dans la collection.`);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    // databaseService.disconnect();
   }
+}
+
   
 // Appel des fonctions pour récupérer et insérer les genres [cette fonction s'appelle une fois seulement]
 //   getGenres().then(genres => {

@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { MongoClient } from 'mongodb';
 import { fetchMultiplesId } from '../extraction/extraction';
+import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
 export class RandomService {
+  constructor(private readonly databaseService: DatabaseService) {}
+  
   
   async getRandomAlbum() {
-    const client = await MongoClient.connect('mongodb://localhost:27017');
-    const db = client.db('albums');
+    await this.databaseService.connect();
+    const client = this.databaseService.getClient();
+    const db = client.db('Discoverio');
     const albumIds = await db.collection("albums").distinct("resultat.id");
     const un_album = albumIds[Math.floor(Math.random() * albumIds.length)];
     const album = await db.collection("albums").findOne({ "resultat.id": un_album });

@@ -5,16 +5,22 @@ export const fetchDataForFav = () => {
     .get('http://localhost:3000/infos/profile/hystory/musics/liked/1')
     .then(response => {
       const numbers = response.data;
-      return numbers.map((number, index) => ({
-        id: index + 1,
-        title: `Album n° ${number}`,
-      }));
+      const promises = numbers.map((number, index) => {
+        return axios.get(`http://localhost:3000/infos/album/title/${number}`)
+          .then(albumResponse => ({
+            id: index + 1,
+            title: albumResponse.data,
+          }));
+      });
+
+      return Promise.all(promises);
     })
     .catch(error => {
       console.error(error);
       return [];
     });
 };
+
 
 export const fetchDataForHate = () => {
     return axios

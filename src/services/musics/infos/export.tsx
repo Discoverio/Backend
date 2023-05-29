@@ -21,6 +21,27 @@ import axios from 'axios';
  * @param deezer_album_id - l'id de l'album dont on souhaite obtenir l'année.
  * @returns L'année de l'album.
  */
+export async function getAlbumTitle(deezer_album_id) {
+
+  try {
+
+    const response = await axios.get(`http://localhost:3000/infos/album/title/${deezer_album_id}`);
+    return response.data;
+
+  } catch (error) {
+
+    console.error(error);
+    return '';
+
+  }
+};
+
+
+/**
+ * Cette fonction prend un deezer_album_id comme argument, obtient l'année d'un album à partir de l'API Deezer.
+ * @param deezer_album_id - l'id de l'album dont on souhaite obtenir l'année.
+ * @returns L'année de l'album.
+ */
 export async function getAlbumYear(deezer_album_id) {
 
   try {
