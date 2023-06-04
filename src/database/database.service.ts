@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MongoClient } from 'mongodb';
 
 const username = 'admin';
-const password = 'mettre_mdp_ici';
+const password = 'y233QJAe1v4AQuNF';
 
 @Injectable()
 export class DatabaseService {
