@@ -5,7 +5,7 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const corsOptions = {
-    origin: 'http://localhost:19006', // Replace with the URL of your React Native app
+    origin: process.env.REACT_APP_FRONT_ADRESS,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
