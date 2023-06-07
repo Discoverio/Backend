@@ -25,7 +25,7 @@ export async function getAlbumTitle(deezer_album_id) {
 
   try {
 
-    const response = await axios.get(`http://localhost:3000/infos/album/title/${deezer_album_id}`);
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/album/title/${deezer_album_id}`);
     return response.data;
 
   } catch (error) {
@@ -46,7 +46,7 @@ export async function getAlbumYear(deezer_album_id) {
 
   try {
 
-    const response = await axios.get(`http://localhost:3000/infos/album/year/${deezer_album_id}`);
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/album/year/${deezer_album_id}`);
     return response.data;
 
   } catch (error) {
@@ -68,7 +68,7 @@ export async function getAlbumGenre(deezer_album_id) {
 
   try {
 
-    const response = await axios.get(`http://localhost:3000/infos/album/genre/${deezer_album_id}`);
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/album/genre/${deezer_album_id}`);
     return response.data;
 
   } catch (error) {
@@ -114,7 +114,7 @@ export async function isExplicit(deezer_album_id) {
 
   try {
 
-    const response = await axios.get(`http://localhost:3000/infos/album/explicit/${deezer_album_id}`);
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/album/explicit/${deezer_album_id}`);
     return response.data;
 
   } catch (error) {

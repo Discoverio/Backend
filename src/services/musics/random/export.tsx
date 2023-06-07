@@ -20,7 +20,7 @@ export async function getOneRandomAlbum() {
 
   try {
 
-    const response = await axios.get('http://localhost:3000/random');
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/random`);
     return response.data.id;
 
   } catch (error) {

@@ -2,11 +2,11 @@ import axios from 'axios';
 
 export const fetchDataForFav = () => {
   return axios
-    .get('http://localhost:3000/infos/profile/hystory/musics/liked/1')
+    .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/hystory/musics/liked/1`)
     .then(response => {
       const numbers = response.data;
       const promises = numbers.map((number, index) => {
-        return axios.get(`http://localhost:3000/infos/album/title/${number}`)
+        return axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/album/title/${number}`)
           .then(albumResponse => ({
             id: index + 1,
             title: albumResponse.data,
@@ -24,7 +24,7 @@ export const fetchDataForFav = () => {
 
 export const fetchDataForHate = () => {
     return axios
-      .get('http://localhost:3000/infos/profile/hystory/musics/unliked/1')
+      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/hystory/musics/unliked/1`)
       .then(response => {
         const numbers = response.data;
         return numbers.map((number, index) => ({
@@ -41,7 +41,7 @@ export const fetchDataForHate = () => {
 
 export const fetchDataForHystory = () => {
     return axios
-      .get('http://localhost:3000/infos/profile/hystory/musics/1')
+      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/hystory/musics/1`)
       .then(response => {
         const numbers = response.data;
         return numbers.map((number, index) => ({
@@ -58,7 +58,7 @@ export const fetchDataForHystory = () => {
 
   export const fetchDataForFirstName = () => {
     return axios
-      .get('http://localhost:3000/infos/profile/firstname/1')
+      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/firstname/1`)
       .then(response => {
         // Récupérer la chaîne de caractères
         const firstName = response.data;
@@ -79,7 +79,7 @@ export const fetchDataForHystory = () => {
 
   export const fetchDataForLastName = () => {
     return axios
-      .get('http://localhost:3000/infos/profile/lastname/1')
+      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/lastname/1`)
       .then(response => {
         // Récupérer la chaîne de caractères
         const lastName = response.data;

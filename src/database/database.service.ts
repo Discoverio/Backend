@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { MongoClient } from 'mongodb';
 
-const username = 'admin';
-const password = 'mettre_mdp_ici';
+const username = process.env.MONGO_USERNAME;
+const password = process.env.MONGO_PASSWORD;
 
 @Injectable()
 export class DatabaseService {
   private client: MongoClient;
-  private uri: string = `mongodb+srv://${username}:${password}@discoverio.8i7zy8i.mongodb.net/`;
+  private uri: string = `mongodb+srv://${username}:${password}@discoverio.8i7zy8i.mongodb.net/Discoverio`;
 
   async connect(): Promise<void> {
     try {
