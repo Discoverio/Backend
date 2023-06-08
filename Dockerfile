@@ -1,17 +1,15 @@
 # Base image
-FROM node:latest
+FROM node:16.13.1
 
 # Create app directory
 WORKDIR /app
 
 # Install app dependencies
-
 COPY package*.json ./
-
 RUN npm install -g npm@9.6.2
-RUN npm install 
+RUN npm install
 
-
+# Copy the rest of the application code
 COPY . .
 
 # Run app
