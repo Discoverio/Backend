@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Console, log } from 'console';
-import { MongoClient, Collection, Filter } from 'mongodb';
+import { MongoClient, Collection, Filter, ObjectId } from 'mongodb';
 import { DatabaseService } from 'src/database/database.service';
 
 
@@ -13,8 +13,9 @@ export class ProfileInfosService {
       await this.databaseService.connect();
       const client = this.databaseService.getClient();
       const database = client.db('Discoverio');
-      const collection = database.collection('profile');
-      const existingProfile = await collection.findOne({ profile_id: profileId });
+      const collection = database.collection('profiles');
+      const objectId = new ObjectId(profileId);
+      const existingProfile = await collection.findOne({ _id: objectId });
 
       if (!existingProfile) {
         console.log('Le profileId spécifié n\'existe pas.');
@@ -22,14 +23,14 @@ export class ProfileInfosService {
       }
 
       const result = await collection
-        .find({ profile_id: profileId })
-        .project({ 'hystory.musics.liked': 1 })
+        .find({ _id: objectId })
+        .project({ 'history.musics.liked': 1 })
         .toArray();
 
       const likedMusics: string[] = [];
 
       for (const doc of result) {
-        const likedMusicsData = doc.hystory?.musics?.liked || [];
+        const likedMusicsData = doc.history?.musics?.liked || [];
         likedMusics.push(...likedMusicsData);
       }
 
@@ -38,7 +39,7 @@ export class ProfileInfosService {
       console.error('Erreur de connexion à la base de données:', err);
       return [];
     } finally {
-      // await this.databaseService.disconnect();
+      
     }
   }
   
@@ -51,8 +52,9 @@ export class ProfileInfosService {
       await this.databaseService.connect();
       const client = this.databaseService.getClient();
       const database = client.db('Discoverio');
-      const collection = database.collection('profile');
-      const existingProfile = await collection.findOne({ profile_id: profileId });
+      const collection = database.collection('profiles');
+      const objectId = new ObjectId(profileId);
+      const existingProfile = await collection.findOne({ _id: objectId });
   
       if (!existingProfile) {
         console.log('Le profileId spécifié n\'existe pas.');
@@ -60,15 +62,15 @@ export class ProfileInfosService {
       }
   
       await collection.updateOne(
-        { profile_id: profileId },
-        { $push: { 'hystory.musics.liked': albumId } }
+        { _id: objectId },
+        { $push: { 'history.musics.liked': albumId } }
       );
   
       console.log('ID aimé ajouté avec succès !');
     } catch (err) {
       console.error('Erreur de connexion à la base de données:', err);
     } finally {
-      // await this.databaseService.disconnect();
+      
     }
   }
 
@@ -82,8 +84,9 @@ export class ProfileInfosService {
       await this.databaseService.connect();
       const client = this.databaseService.getClient();
       const database = client.db('Discoverio');
-      const collection = database.collection('profile');
-      const existingProfile = await collection.findOne({ profile_id: profileId });
+      const collection = database.collection('profiles');
+      const objectId = new ObjectId(profileId);
+      const existingProfile = await collection.findOne({ _id: objectId });
   
       if (!existingProfile) {
         console.log('Le profileId spécifié n\'existe pas.');
@@ -91,15 +94,15 @@ export class ProfileInfosService {
       }
   
       await collection.updateOne(
-        { profile_id: profileId },
-        { $pull: { 'hystory.musics.liked': albumId } }
+        { _id: objectId },
+        { $pull: { 'history.musics.liked': albumId } }
       );
   
       console.log('ID aimé supprimé avec succès !');
     } catch (err) {
       console.error('Erreur de connexion à la base de données:', err);
     } finally {
-      // await this.databaseService.disconnect();
+      
     }
   }
   
@@ -118,8 +121,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
 
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -127,14 +131,14 @@ export class ProfileInfosService {
         }
 
         const result = await collection
-        .find({ profile_id: profileId })
-        .project({ 'hystory.musics.unliked': 1 })
+        .find({ _id: objectId })
+        .project({ 'history.musics.unliked': 1 })
         .toArray();
 
         const unlikedMusics: string[] = [];
     
         for (const doc of result) {
-          const unlikedMusicsData = doc.hystory?.musics?.unliked || [];
+          const unlikedMusicsData = doc.history?.musics?.unliked || [];
           unlikedMusics.push(...unlikedMusicsData);
         }
        
@@ -155,8 +159,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
     
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -164,15 +169,15 @@ export class ProfileInfosService {
         }
     
         await collection.updateOne(
-          { profile_id: profileId },
-          { $push: { 'hystory.musics.unliked': albumId } }
+          { _id: objectId },
+          { $push: { 'history.musics.unliked': albumId } }
         );
     
         console.log('ID non-aimé ajouté avec succès !');
       } catch (err) {
         console.error('Erreur de connexion à la base de données:', err);
       } finally {
-        // await this.databaseService.disconnect();
+        
       }
     }
     
@@ -181,8 +186,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
     
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -190,15 +196,15 @@ export class ProfileInfosService {
         }
     
         await collection.updateOne(
-          { profile_id: profileId },
-          { $pull: { 'hystory.musics.unliked': albumId } }
+          { _id: objectId },
+          { $pull: { 'history.musics.unliked': albumId } }
         );
     
         console.log('ID non-aimé supprimé avec succès !');
       } catch (err) {
         console.error('Erreur de connexion à la base de données:', err);
       } finally {
-        // await this.databaseService.disconnect();
+        
       }
     }
     
@@ -209,8 +215,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
   
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -218,14 +225,14 @@ export class ProfileInfosService {
         }
   
         const result = await collection
-          .find({ profile_id: profileId })
-          .project({ 'hystory.musics.done': 1 })
+          .find({ _id: objectId })
+          .project({ 'history.musics.done': 1 })
           .toArray();
   
         const doneMusics: string[] = [];
   
         for (const doc of result) {
-          const doneMusicsData = doc.hystory?.musics?.done || [];
+          const doneMusicsData = doc.history?.musics?.done || [];
           doneMusics.push(...doneMusicsData);
         }
   
@@ -234,7 +241,7 @@ export class ProfileInfosService {
         console.error('Erreur de connexion à la base de données:', err);
         return [];
       } finally {
-        // await this.databaseService.disconnect();
+        
       }
     }
 
@@ -245,8 +252,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
     
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -254,15 +262,15 @@ export class ProfileInfosService {
         }
     
         await collection.updateOne(
-          { profile_id: profileId },
-          { $push: { 'hystory.musics.done': albumId } }
+          { _id: objectId },
+          { $push: { 'history.musics.done': albumId } }
         );
     
         console.log('ID «réalisée» ajouté avec succès !');
       } catch (err) {
         console.error('Erreur de connexion à la base de données:', err);
       } finally {
-        // await this.databaseService.disconnect();
+        
       }
     }
     
@@ -271,8 +279,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
     
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -280,15 +289,15 @@ export class ProfileInfosService {
         }
     
         await collection.updateOne(
-          { profile_id: profileId },
-          { $pull: { 'hystory.musics.done': albumId } }
+          { _id: objectId },
+          { $pull: { 'history.musics.done': albumId } }
         );
     
         console.log('ID «réalisée» supprimé avec succès !');
       } catch (err) {
         console.error('Erreur de connexion à la base de données:', err);
       } finally {
-        // await this.databaseService.disconnect();
+        
       }
     }
 
@@ -305,8 +314,9 @@ export class ProfileInfosService {
         await this.databaseService.connect();
         const client = this.databaseService.getClient();
         const database = client.db('Discoverio');
-        const collection = database.collection('profile');
-        const existingProfile = await collection.findOne({ profile_id: profileId });
+        const collection = database.collection('profiles');
+        const objectId = new ObjectId(profileId);
+        const existingProfile = await collection.findOne({ _id: objectId });
 
         if (!existingProfile) {
           console.log('Le profileId spécifié n\'existe pas.');
@@ -314,15 +324,15 @@ export class ProfileInfosService {
         }
 
         const result = await collection
-        .find({ profile_id: profileId })
-        .project({ 'hystory.musics': 1 })
+        .find({ _id: objectId })
+        .project({ 'history.musics': 1 })
         .toArray();
 
         const allMusics: number[] = [];
       
         for (const doc of result) {
-          const hystory = doc.hystory || {};
-          const musics = hystory.musics || {};
+          const history = doc.history || {};
+          const musics = history.musics || {};
           const likedMusics = musics.liked || [];
           const unlikedMusics = musics.unliked || [];
       
@@ -361,8 +371,9 @@ export class ProfileInfosService {
       await this.databaseService.connect();
       const client = this.databaseService.getClient();
       const database = client.db('Discoverio');
-      const collection = database.collection('profile');
-      const existingProfile = await collection.findOne({ profile_id: profileId });
+      const collection = database.collection('profiles');
+      const objectId = new ObjectId(profileId);
+      const existingProfile = await collection.findOne({ _id: objectId });
 
       if (!existingProfile) {
         console.log('Le profileId spécifié n\'existe pas.');
@@ -370,7 +381,7 @@ export class ProfileInfosService {
       }
 
       const result = await collection
-      .find({ profile_id: profileId })
+      .find({ _id: objectId })
       .project({ 'stats.credits': 1 })
       .toArray();
 
@@ -409,7 +420,7 @@ async getUserPerformedActivities(profileId: string): Promise<number[]> {
     await this.databaseService.connect();
     const client = this.databaseService.getClient();
     const database = client.db('Discoverio');
-    const collection = database.collection('profile');
+    const collection = database.collection('profiles');
     const existingProfile = await collection.findOne({ profile_id: profileId });
 
     if (!existingProfile) {
@@ -461,26 +472,30 @@ async getFirstNameOfUser(profileId: string): Promise<string> {
     await this.databaseService.connect();
     const client = this.databaseService.getClient();
     const database = client.db('Discoverio');
-    const collection = database.collection('profile');
-    const existingProfile = await collection.findOne({ profile_id: profileId });
+    const collection = database.collection('profiles');
+
+    // Creating an ObjectId instance from the profileId
+    const objectId = new ObjectId(profileId);
+
+    const existingProfile = await collection.findOne({ _id: objectId });
 
     if (!existingProfile) {
-      console.log('Le profileId spécifié n\'existe pas.');
+      console.log('Le profileId spécifié '+objectId+' n\'existe pas.');
       return '';
     }
 
     const result = await collection
-      .find({ profile_id: profileId })
-      .project({ 'firstname': 1 })
+      .find({ _id: objectId })
+      .project({ given_name: 1 })
       .toArray();
 
     let firstName: string = '';
 
     for (const doc of result) {
-      const firstNameData = doc.firstname || '';
+      const firstNameData = doc.given_name || '';
       firstName += firstNameData;
     }
-    
+
     // client.close();        
     return firstName;
   } catch (err) {
@@ -504,14 +519,17 @@ async getFirstNameOfUser(profileId: string): Promise<string> {
 
 
 
-
 async getLastNameOfUser(profileId: string): Promise<string> {
   try {
     await this.databaseService.connect();
     const client = this.databaseService.getClient();
     const database = client.db('Discoverio');
-    const collection = database.collection('profile');
-    const existingProfile = await collection.findOne({ profile_id: profileId });
+    const collection = database.collection('profiles');
+
+    // Creating an ObjectId instance from the profileId
+    const objectId = new ObjectId(profileId);
+
+    const existingProfile = await collection.findOne({ _id: objectId });
 
     if (!existingProfile) {
       console.log('Le profileId spécifié n\'existe pas.');
@@ -519,24 +537,23 @@ async getLastNameOfUser(profileId: string): Promise<string> {
     }
 
     const result = await collection
-      .find({ profile_id: profileId })
-      .project({ 'lastname': 1 })
+      .find({ _id: objectId })
+      .project({ family_name: 1 })
       .toArray();
 
     let lastName: string = '';
 
     for (const doc of result) {
-      const lastNameData = doc.lastname || '';
+      const lastNameData = doc.family_name || '';
       lastName += lastNameData;
     }
-    
+
     // client.close();        
     return lastName;
   } catch (err) {
     console.error('Erreur de connexion à la base de données:', err);
   }
 
+
 }
-
-
 }

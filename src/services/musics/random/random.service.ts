@@ -20,10 +20,10 @@ export class RandomService {
       if (alb_json[i].id === un_album) {
         // console.log(alb_json[i].id + " true because find " + un_album);
         // console.log(alb_json[i]);
-        fetchMultiplesId();
+        // fetchMultiplesId(); [Extraction/Insertion = trop de requetes]
         return alb_json[i];
       }
     }
-    client.close();
+    // client.close();
   }
 }

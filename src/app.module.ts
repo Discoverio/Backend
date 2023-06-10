@@ -12,6 +12,8 @@ import { InfosService } from './services/musics/infos/infos.service';
 import { ProfileInfosController } from './auth/profile/infos/infos.controller';
 import { ProfileInfosService } from './auth/profile/infos/infos.service';
 import { DatabaseService } from './database/database.service';
+import { SessionService } from './services/musics/sessions/session.service';
+import { SessionController } from './services/musics/sessions/session.controller';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { DatabaseService } from './database/database.service';
     MongooseModule.forFeature([{ name: Profile.name, schema: ProfileSchema }]),
     HttpModule
   ],
-  controllers: [AppController, RandomController, InfosController, ProfileInfosController],
-  providers: [AppService, RandomService, InfosService, ProfileInfosService, DatabaseService],
+  controllers: [AppController, RandomController, InfosController, ProfileInfosController, SessionController],
+  providers: [AppService, RandomService, InfosService, ProfileInfosService, DatabaseService, SessionService],
 })
 export class AppModule {}

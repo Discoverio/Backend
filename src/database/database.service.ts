@@ -18,11 +18,6 @@ export class DatabaseService {
     }
   }
 
-  // async disconnect(): Promise<void> {
-  //   if (this.client) {
-  //     await this.client.close();
-  //   }
-  // }
 
   getClient() {
     if (!this.client) {

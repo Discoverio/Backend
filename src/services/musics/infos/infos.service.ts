@@ -26,8 +26,9 @@ export class InfosService {
   }
 
   async getAlbumYear(deezer_album_id) {
-    const client = await MongoClient.connect('mongodb://localhost:27017');
-    const db = client.db('albums');
+    await this.databaseService.connect();
+    const client = this.databaseService.getClient();
+    const db = client.db('Discoverio');
     const album = await db.collection("albums").findOne({ "resultat.id": parseInt(deezer_album_id) });
 
     let alb_json = album.resultat;
@@ -45,8 +46,9 @@ export class InfosService {
 
 
   async isExplicit_lyrics(deezer_album_id) {
-    const client = await MongoClient.connect('mongodb://localhost:27017');
-    const db = client.db('albums');
+    await this.databaseService.connect();
+    const client = this.databaseService.getClient();
+    const db = client.db('Discoverio');
     const album = await db.collection("albums").findOne({ "resultat.id": parseInt(deezer_album_id) });
     let alb_json = album.resultat;
     for (let i in alb_json) {
@@ -62,8 +64,9 @@ export class InfosService {
   }
 
   async getAlbumGenre(deezer_album_id) {
-    const client = await MongoClient.connect('mongodb://localhost:27017');
-    const db = client.db('albums');
+    await this.databaseService.connect();
+    const client = this.databaseService.getClient();
+    const db = client.db('Discoverio');
     const album = await db.collection("albums").findOne({ "resultat.id": parseInt(deezer_album_id) });
 
     let alb_json = album.resultat;

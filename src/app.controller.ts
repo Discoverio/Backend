@@ -1,28 +1,46 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Session } from '@nestjs/common';
 import { AppService } from './app.service';
 import { OAuth2Client } from 'google-auth-library'; // Import the OAuth2Client
-
+import { SessionService } from './services/musics/sessions/session.service';
 @Controller()
 export class AppController {
+  private client: OAuth2Client;
 
-  private client: OAuth2Client; // Declare a private instance variable
-  
-  constructor(private readonly appService: AppService) {
-    this.client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID); // Initialize the OAuth2Client
+  constructor(
+    private readonly appService: AppService,
+    private readonly sessionService: SessionService
+  ) {
+    this.client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
   }
   
+
   @Post('/login')
-  async login(@Body('token') token): Promise<any> {
-    const ticket = await this.client.verifyIdToken({ // Use the initialized client
+  async login(@Body('token') token, @Session() session): Promise<any> {
+    const ticket = await this.client.verifyIdToken({
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
     console.log(ticket.getPayload(), 'ticket');
-    const { email, given_name, family_name, picture } = ticket.getPayload();
-    const data = await this.appService.login({ email, given_name, family_name, image: picture });
+    const payload = ticket.getPayload();
+    const userId = payload['sub'];
+    const objectUserId = await this.appService.getUserIdFromSub(userId);
+    // Check if the session object exists, if not, initialize it
+    if (!session) {
+      session = {};
+    }
+
+    // Set the objectUserId property
+    session.objectUserId = objectUserId;
+    this.sessionService.setObjectUserId(objectUserId);
+    console.log('Utilisateur actuellement connecté : ' + session.objectUserId);
+    const history = { musics: { liked: [], unliked: [], done: [] } };
+    const stats = { credits: { $numberLong: '' }, performed_activities: { $numberLong: '' } };
+    const { email, sub, given_name, family_name, picture } = ticket.getPayload();
+    const data = await this.appService.login({ email, sub, given_name, family_name, image: picture, stats, history });
     return {
       data,
       message: 'success',
     };
   }
+
 }

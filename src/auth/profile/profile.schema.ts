@@ -6,6 +6,9 @@ export type ProfileDocument = Profile & Document;
 @Schema()
 export class Profile {
  @Prop()
+ sub: string;
+
+ @Prop()
  given_name: string;
 
  @Prop()
@@ -16,6 +19,12 @@ export class Profile {
 
  @Prop()
  image: string;
+
+ @Prop({ type: Object }) // Add @Prop decorator with type declaration
+ stats: object;
+
+ @Prop({ type: Object }) // Add @Prop decorator with type declaration
+ history: object;
 
 }
 

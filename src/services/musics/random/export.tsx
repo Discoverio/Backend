@@ -33,7 +33,7 @@ export async function getOneRandomAlbum() {
 
 
 
-let lastExecutionTime = new Date(2023, 4, 17, 16, 30); //remplacer ici par la dernière date de l'interaction de l'utilisateur
+let lastExecutionTime = new Date(2022, 6, 8, 22, 30); //remplacer ici par la dernière date de l'interaction de l'utilisateur
 /**
  * Si la dernière exécution remonte à moins de 24 heures, l'execution n'est pas réalisée.
  * Le temps restant avant la prochaine exécution est indiqué lors du refus.
@@ -56,7 +56,8 @@ export async function checkAndExecute() {
   lastExecutionTime = currentTime;
   // Lancer la requête ici
   console.log("Lancement de la requête...");
-  console.log(getOneRandomAlbum());
+  // console.log(getOneRandomAlbum());
+  return getOneRandomAlbum();
 }
 // Appeler cette fonction lors de la connexion d'un utilisateur à l'application
 // checkAndExecute();

@@ -7,22 +7,22 @@ import { ProfileInfosService } from './infos.service';
 export class ProfileInfosController {
   constructor(private readonly profileInfosService: ProfileInfosService) {}
 
-    @Get('/profile/hystory/musics/liked/:profile_id')
+    @Get('/profile/history/musics/liked/:profile_id')
     async getLikedMusics(@Param('profile_id') profile_id: string) {
       return this.profileInfosService.getLikedMusics(profile_id);
     }
 
-    @Get('/profile/hystory/musics/unliked/:profile_id')
+    @Get('/profile/history/musics/unliked/:profile_id')
     async getUnLikedMusics(@Param('profile_id') profile_id: string) {
       return this.profileInfosService.getUnLikedMusics(profile_id);
     }    
 
-    @Get('/profile/hystory/musics/done/:profile_id')
+    @Get('/profile/history/musics/done/:profile_id')
     async getDoneMusics(@Param('profile_id') profile_id: string) {
       return this.profileInfosService.getDoneMusics(profile_id);
     }    
 
-    @Get('/profile/hystory/musics/:profile_id')
+    @Get('/profile/history/musics/:profile_id')
     async getAllMusics(@Param('profile_id') profile_id: string) {
       return this.profileInfosService.getAllMusics(profile_id);
     }
