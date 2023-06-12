@@ -15,7 +15,8 @@ export class AppService {
     family_name,
     image,
     stats,
-    history
+    history,
+    current
   }: {
     email: string;
     sub: string;
@@ -24,10 +25,11 @@ export class AppService {
     image: string;
     stats: object;
     history: object;
+    current: object
   }): Promise<any> {
     const profile = await this.profileModel.findOne({ email: email });
     if (!profile) {
-      const newProfile = new this.profileModel({ email, sub, given_name, family_name, image, stats, history });
+      const newProfile = new this.profileModel({ email, sub, given_name, family_name, image, stats, history, current });
       await newProfile.save();
       return newProfile;
     } else {

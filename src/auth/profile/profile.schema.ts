@@ -26,6 +26,9 @@ export class Profile {
  @Prop({ type: Object }) // Add @Prop decorator with type declaration
  history: object;
 
+ @Prop({ type : Object })
+ current: object;
+
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile);

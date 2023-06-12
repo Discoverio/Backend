@@ -1,5 +1,5 @@
 export function sendRequest(action, method, id, content) {
-    const baseUrl = `${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/history/musics`;
+    const baseUrl = `http://localhost:3000/infos/profile/history/musics`;
     const url = `${baseUrl}/${action}/${id}`;
   
     const body = content ? JSON.stringify(content) : JSON.stringify({ id: id });

@@ -65,7 +65,7 @@ export class ProfileInfosService {
         { _id: objectId },
         { $push: { 'history.musics.liked': albumId } }
       );
-  
+      
       console.log('ID aimé ajouté avec succès !');
     } catch (err) {
       console.error('Erreur de connexion à la base de données:', err);

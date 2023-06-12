@@ -41,7 +41,7 @@ export class InfosService {
       }
     }
 
-    client.close();
+    // client.close();
   }
 
 
@@ -57,7 +57,7 @@ export class InfosService {
         const explicit = alb_json[i].explicit_lyrics;
         console.log(explicit ? "Contient des paroles « Explicit »" : "Ne Contient des paroles « Explicit »");
 
-        client.close();
+        // client.close();
         return explicit ? "Explicit" : "";
       }
     }
@@ -86,7 +86,7 @@ export class InfosService {
 
 
     }
-      client.close();
+      // client.close();
     }
 
   }

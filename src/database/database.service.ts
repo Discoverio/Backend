@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { MongoClient } from 'mongodb';
 
-const username = process.env.MONGO_USERNAME;
-const password = process.env.MONGO_PASSWORD;
+const username = "admin";
+const password = "y233QJAe1v4AQuNF";
 
 @Injectable()
 export class DatabaseService {

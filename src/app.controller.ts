@@ -35,8 +35,9 @@ export class AppController {
     console.log('Utilisateur actuellement connecté : ' + session.objectUserId);
     const history = { musics: { liked: [], unliked: [], done: [] } };
     const stats = { credits: { $numberLong: '' }, performed_activities: { $numberLong: '' } };
+    const current = { music: { albumId: { id: '400319947' }, lastExecutionTime: { $date: { $numberLong: '' } } } };
     const { email, sub, given_name, family_name, picture } = ticket.getPayload();
-    const data = await this.appService.login({ email, sub, given_name, family_name, image: picture, stats, history });
+    const data = await this.appService.login({ email, sub, given_name, family_name, image: picture, stats, history, current });
     return {
       data,
       message: 'success',

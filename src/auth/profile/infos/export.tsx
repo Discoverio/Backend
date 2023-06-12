@@ -4,7 +4,7 @@ import axios from 'axios';
 // Fonction pour récupérer la valeur de objectUserId à partir du backend
 async function fetchObjectUserId() {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/session/userId`);
+    const response = await axios.get(`http://localhost:3000/session/userId`);
     return response.data; // Valeur de objectUserId
     console.log(response.data);
     
@@ -18,11 +18,11 @@ async function fetchObjectUserId() {
 export const fetchDataForFav = async () => {
   const objectUserId = await fetchObjectUserId();
   return axios
-    .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/history/musics/liked/${objectUserId}`)
+    .get(`http://localhost:3000/infos/profile/history/musics/liked/${objectUserId}`)
     .then(response => {
       const numbers = response.data;
       const promises = numbers.map((number, index) => {
-        return axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/album/title/${number}`)
+        return axios.get(`http://localhost:3000/infos/album/title/${number}`)
           .then(albumResponse => ({
             id: index + 1,
             title: albumResponse.data,
@@ -41,7 +41,7 @@ export const fetchDataForFav = async () => {
 export const fetchDataForHate = async () => {
   const objectUserId = await fetchObjectUserId();
     return axios
-      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/history/musics/unliked/${objectUserId}`)
+      .get(`http://localhost:3000/infos/profile/history/musics/unliked/${objectUserId}`)
       .then(response => {
         const numbers = response.data;
         return numbers.map((number, index) => ({
@@ -59,7 +59,7 @@ export const fetchDataForHate = async () => {
 export const fetchDataForhistory = async () => {
   const objectUserId = await fetchObjectUserId();
     return axios
-      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/history/musics/${objectUserId}`)
+      .get(`http://localhost:3000/infos/profile/history/musics/${objectUserId}`)
       .then(response => {
         const numbers = response.data;
         return numbers.map((number, index) => ({
@@ -76,7 +76,7 @@ export const fetchDataForhistory = async () => {
 
   export const fetchDataForFirstName = async () => {
     const objectUserId = await fetchObjectUserId();
-    return axios.get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/firstname/${objectUserId}`)
+    return axios.get(`http://localhost:3000/infos/profile/firstname/${objectUserId}`)
       .then(response => {
         // Récupérer la chaîne de caractères
         const firstName = response.data;
@@ -98,7 +98,7 @@ export const fetchDataForhistory = async () => {
   export const fetchDataForLastName = async () => {
     const objectUserId = await fetchObjectUserId();
     return axios
-      .get(`${process.env.REACT_APP_BACKEND_ADRESS}/infos/profile/lastname/${objectUserId}`)
+      .get(`http://localhost:3000/infos/profile/lastname/${objectUserId}`)
       .then(response => {
         // Récupérer la chaîne de caractères
         const lastName = response.data;
