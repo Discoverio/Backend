@@ -32,6 +32,15 @@
 $ npm install
 ```
 
+## Export Local Variables
+
+```bash
+# mongo username bdd
+export MONGO_USERNAME=admin
+# mongo password bdd
+export MONGO_PASSWORD=y233QJAe1v4AQuNF
+```
+
 ## Running the app
 
 ```bash
