@@ -1,4 +1,14 @@
 <p align="center">
+  <a href="https://discoverio.fr" target="_blank"><img src="https://ypetit.web-edu.fr/2023/logo_horizontal_original.png" alt="Discoverio Logo" /></a>
+</p>
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Discoverio_Backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Discoverio_Backend) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Discoverio_Backend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Discoverio_Backend) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Discoverio_Backend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Discoverio_Backend) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Discoverio_Backend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Discoverio_Backend) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Discoverio_Backend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=Discoverio_Backend)
+
+<h1>BackEnd</h1>
+
+
+<p align="center">
+  Project authors : Simon MANIEZ, Yoann PETIT. [Discoverio 2023]
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
